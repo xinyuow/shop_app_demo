@@ -57,7 +57,8 @@ class _HmSliderState extends State<HmSlider> {
   // 获取搜索框
   Widget _getSearch() {
     return Positioned(
-      top: 10,
+      // 搜索框距离顶部的距离
+      top: MediaQuery.of(context).padding.top,
       left: 0,
       right: 0,
       child: Padding(
