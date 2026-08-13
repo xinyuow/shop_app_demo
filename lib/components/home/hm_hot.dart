@@ -8,10 +8,15 @@ import 'package:shop_app_demo/view_models/home.dart';
 class HmHot extends StatefulWidget {
   // 热榜推荐
   final SpecialRecommendResult hotRecommendResult;
+
   // 类型
   final String type;
 
-  const HmHot({super.key, required this.hotRecommendResult, required this.type});
+  const HmHot({
+    super.key,
+    required this.hotRecommendResult,
+    required this.type,
+  });
 
   @override
   State<HmHot> createState() => _HmHotState();
@@ -57,40 +62,45 @@ class _HmHotState extends State<HmHot> {
   List<Widget> _getChildrenList() {
     List<GoodsItem> items = _getDisplayItems();
     return List.generate(items.length, (int index) {
-      return Column(
-        children: [
-          // ClipRRect 可以包裹子元素、裁剪图片、设置圆角
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.network(
-              items[index].picture,
-              width: 100,
-              height: 140,
-              fit: BoxFit.cover,
-              // 如果网络图片加载失败，则显示默认图片
-              errorBuilder: (context, error, stackTrace) {
-                return Image.asset("lib/assets/home_cmd_inner.png");
-              },
-            ),
-          ),
-          SizedBox(height: 10),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            decoration: BoxDecoration(
-              color: Colors.orange,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Text(
-              "￥${items[index].price}",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
+      return Expanded(
+        child: Column(
+          children: [
+            // ClipRRect 可以包裹子元素、裁剪图片、设置圆角
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.network(
+                items[index].picture,
+                height: 100,
+                fit: BoxFit.cover,
+                // 如果网络图片加载失败，则显示默认图片
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    "lib/assets/home_cmd_inner.png",
+                    fit: BoxFit.cover,
+                    height: 100,
+                  );
+                },
               ),
             ),
-          ),
-        ],
+            SizedBox(height: 10),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: Colors.orange,
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Text(
+                "￥${items[index].price}",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ],
+        ),
       );
     });
   }

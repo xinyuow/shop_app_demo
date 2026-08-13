@@ -71,40 +71,41 @@ class _HmSuggestionState extends State<HmSuggestion> {
   List<Widget> _buildRight() {
     List<GoodsItem> items = _getDisplayItems();
     return List.generate(items.length, (int index) {
-      return Column(
-        children: [
-          // ClipRRect 可以包裹子元素、裁剪图片、设置圆角
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.network(
-              items[index].picture,
-              width: 100,
-              height: 140,
-              fit: BoxFit.cover,
-              // 如果网络图片加载失败，则显示默认图片
-              errorBuilder: (context, error, stackTrace) {
-                return Image.asset("lib/assets/home_cmd_inner.png");
-              },
-            ),
-          ),
-          SizedBox(height: 10),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            decoration: BoxDecoration(
-              color: Colors.orange,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Text(
-              "￥${items[index].price}",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
+      return Expanded(
+        child: Column(
+          children: [
+            // ClipRRect 可以包裹子元素、裁剪图片、设置圆角
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.network(
+                items[index].picture,
+                height: 140,
+                fit: BoxFit.cover,
+                // 如果网络图片加载失败，则显示默认图片
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset("lib/assets/home_cmd_inner.png");
+                },
               ),
             ),
-          ),
-        ],
+            SizedBox(height: 10),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: Colors.orange,
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Text(
+                "￥${items[index].price}",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ],
+        ),
       );
     });
   }
@@ -135,10 +136,13 @@ class _HmSuggestionState extends State<HmSuggestion> {
             Row(
               children: [
                 _buildLeft(),
+                SizedBox(width: 10),
                 Expanded(
                   child: Row(
                     // 分布均分
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    // 设置间距
+                    spacing: 10,
                     children: _buildRight(),
                   ),
                 ),
